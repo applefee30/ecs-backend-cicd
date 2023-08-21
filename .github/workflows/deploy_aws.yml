@@ -6,9 +6,9 @@ on:
       - develop
   workflow_dispatch:
     inputs:
-      env:
+      zone:
         type: choice
-        description: 'env'
+        description: 'zone'
         required: true
         options:
           - test
@@ -18,7 +18,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.env || github.head_ref }}
+    environment: ${{ github.event.inputs.zone || github.head_ref }}
 
     steps:
       - name: Checkout
@@ -61,7 +61,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker buildx build --platform=linux/arm64 --build-arg env=${{ github.event.inputs.env }} -t $ECR_REGISTRY/${{ github.event.repository.name }}:$IMAGE_TAG .
+          docker buildx build --platform=linux/arm64 --build-arg ZONE=${{ github.event.inputs.zone }} -t $ECR_REGISTRY/${{ github.event.repository.name }}:$IMAGE_TAG .
           docker push $ECR_REGISTRY/${{ github.event.repository.name }}:$IMAGE_TAG
           echo "docker_image=$ECR_REGISTRY/${{ github.event.repository.name }}:$IMAGE_TAG" >> $GITHUB_ENV
 
@@ -69,7 +69,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: .github/workflows/${{ github.event.inputs.env }}-ecs-task-definition.json
+          task-definition: .github/workflows/${{ github.event.inputs.zone }}-ecs-task-definition.json
           container-name: ${{ github.event.repository.name }}
           image: ${{ env.docker_image }}
 
@@ -78,5 +78,5 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ github.event.repository.name }}
-          cluster: ${{ github.event.inputs.env }}-ecs-cluster
+          cluster: ${{ github.event.inputs.zone }}-ecs-cluster
           wait-for-service-stability: false
