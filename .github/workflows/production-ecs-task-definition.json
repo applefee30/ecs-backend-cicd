@@ -57,8 +57,8 @@
     }
   ],
   "family": "sample-api",
-  "taskRoleArn": "arn:aws:iam::079445910763:role/ecsTaskExecutionRole",
-  "executionRoleArn": "arn:aws:iam::079445910763:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::513708749142:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::513708749142:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
   "volumes": [],
   "placementConstraints": [],
