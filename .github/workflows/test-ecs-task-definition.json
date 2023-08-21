@@ -16,7 +16,7 @@
       ],
       "environment": [
         {
-          "name": "env",
+          "name": "ZONE",
           "value": "test"
         }
       ],
