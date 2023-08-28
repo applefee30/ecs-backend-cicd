@@ -2,7 +2,7 @@
   "containerDefinitions": [
     {
       "name": "sample-api",
-      "image": "513708749142.dkr.ecr.ap-northeast-2.amazonaws.com/sample-api",
+      "image": "{your.id}.dkr.ecr.ap-northeast-2.amazonaws.com/sample-api",
       "cpu": 0,
       "links": [],
       "portMappings": [
@@ -57,8 +57,8 @@
     }
   ],
   "family": "sample-api",
-  "taskRoleArn": "arn:aws:iam::513708749142:role/ecsTaskExecutionRole",
-  "executionRoleArn": "arn:aws:iam::513708749142:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::{your.id}:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::{your.id}:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
   "volumes": [],
   "placementConstraints": [],
